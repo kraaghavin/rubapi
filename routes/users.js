@@ -1,10 +1,12 @@
+//routes/users.js
 import { Router } from 'express';
 const userRoutes = Router();
 import { authenticateUser } from '../middleware/auth';
-import { getUsers, getUserById, updateUserById } from '../controllers/users';
+import { getUsers, getUserById, updateUserById, createUser } from '../controllers/users';
 
-userRoutes.get('/', authenticateUser, getUsers);
+userRoutes.post('/', createUser);
 userRoutes.get('/:id', authenticateUser, getUserById);
 userRoutes.put('/:id', authenticateUser, updateUserById);
+userRoutes.get('/', authenticateUser, getUsers);
 
 export default userRoutes;

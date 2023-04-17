@@ -1,23 +1,30 @@
-// users.js
+// controllers/users.js
 
-import { create, findById } from '../models/User.js';
+import { create, findById, findAll, updateById } from '../models/User.js'; // Update the import statement
+
+import { generateToken } from '../utils/auth.js'; // Import the function to generate JWT token
 
 // POST /api/users
 export async function createUser(req, res, next) {
   try {
     const { name, email, password } = req.body;
     const user = await create({ name, email, password });
-    res.json(user);
+    
+    // Generate JWT token for the registered user
+    const token = generateToken(user._id); // Assuming user._id is the ID of the registered user
+    console.log(token);
+    res.json({ user, token }); // Return the user and token in the response
   } catch (error) {
     next(error);
   }
 }
 
 
+
 // GET /api/users
 export async function getUsers(req, res, next) {
   try {
-    const users = await findAll();
+    const users = await findAll(); // Update function call
     res.json(users);
   } catch (error) {
     next(error);

@@ -24,7 +24,7 @@ export async function login(req, res, next) {
 
     // Create JWT token
     const token = sign({ userId: user.id }, JWT_SECRET, { expiresIn: '1h' });
-
+    console.log(token);
     res.json({ token });
   } catch (error) {
     next(error);

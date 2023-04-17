@@ -1,7 +1,9 @@
+// Import required modules
 import { verify } from 'jsonwebtoken';
 import { JWT_SECRET } from '../config/env';
 import { findById } from '../models/User.js';
 
+// Middleware function to authenticate user
 export async function authenticateUser(req, res, next) {
   try {
     const authHeader = req.headers.authorization;

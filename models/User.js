@@ -1,3 +1,4 @@
+//models/User.js
 import { Schema, model } from 'mongoose';
 
 const userSchema = new Schema({
@@ -33,6 +34,19 @@ export async function findOne(query) {
     const user = await User.findOne(query);
     return user;
   } catch (error) {
+    console.err(error);
+
+    throw error;
+  }
+}
+
+export async function findAll(id) {
+  try {
+    const user = await User.findAll(id);
+    return user;
+  } catch (error) {
+    console.err(error);
+
     throw error;
   }
 }
@@ -42,6 +56,19 @@ export async function findById(id) {
     const user = await User.findById(id);
     return user;
   } catch (error) {
+    console.err(error);
+
+    throw error;
+  }
+}
+
+export async function updateById(id) {
+  try {
+    const user = await User.upd(id);
+    return user;
+  } catch (error) {
+    console.err(error);
+
     throw error;
   }
 }
@@ -53,6 +80,8 @@ export async function create(data) {
     const user = await User.create(data);
     return user;
   } catch (error) {
+    console.err(error);
+
     throw error;
   }
 }
