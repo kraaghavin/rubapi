@@ -5,14 +5,11 @@ const connectDB = async () => {
   try {
     await connect(MONGODB_URI, {
       useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-    });
+      useUnifiedTopology: true
+      });
     console.log('MongoDB connected!');
   } catch (error) {
-    console.error('MongoDB connection error:', error);
-    process.exit(1);
+    console.error('MongoDB connection error', error);
   }
 };
 

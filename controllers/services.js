@@ -1,27 +1,40 @@
-import { find, create, findById } from '../models/Service.js';
+import { create, findAll, findById, updateById, deleteById } from '../models/Service.js';
+import { getCurrentUser } from '../middleware/auth.js';
+import { findOne } from '../models/User.js';
 
-// GET /api/services
-export async function getServices(req, res, next) {
+  export async function createService(req, res, next) {
+    try {
+      const { title, description, price, duration } = req.body;
+      const existingService = await findOne({ title });
+      if (existingService) {
+      throw new Error('Service with this title already exists');
+      } else {
+      const  userEmail  = getCurrentUser(req, res, next);
+      const id = await userEmail;
+      console.log(id);
+      const user = await findOne({ _id: id });
+      console.log(user);
+      const createBy = user.username;
+      console.log(createBy);
+      
+      const newService = await create({ title, description, price, createdBy : user, duration });
+      res.json(newService);
+  }
+    } catch (error) {
+      next(error);
+    }
+  }
+  
+
+  export async function getServices(req, res, next) {
   try {
-    const services = await find();
+    const services = await findAll();
     res.json(services);
   } catch (error) {
     next(error);
   }
-}
-
-// POST /api/services
-export async function createService(req, res, next) {
-  try {
-    const { name, description, price } = req.body;
-    const service = await create({ name, description, price });
-    res.json(service);
-  } catch (error) {
-    next(error);
   }
-}
 
-// GET /api/services/:id
 export async function getServiceById(req, res, next) {
   try {
     const { id } = req.params;
@@ -35,16 +48,11 @@ export async function getServiceById(req, res, next) {
   }
 }
 
-// PUT /api/services/:id
 export async function updateServiceById(req, res, next) {
   try {
     const { id } = req.params;
-    const { name, description, price } = req.body;
-    const updatedService = await Service.findByIdAndUpdate(
-      id,
-      { name, description, price },
-      { new: true }
-    );
+    const { title, description, price, duration } = req.body;
+    const updatedService = await updateById(id, { title, description, price, duration });
     if (!updatedService) {
       return res.status(404).json({ message: 'Service not found' });
     }
@@ -54,15 +62,14 @@ export async function updateServiceById(req, res, next) {
   }
 }
 
-// DELETE /api/services/:id
 export async function deleteServiceById(req, res, next) {
   try {
     const { id } = req.params;
-    const deletedService = await Service.findByIdAndDelete(id);
+    const deletedService = await deleteById(id);
     if (!deletedService) {
       return res.status(404).json({ message: 'Service not found' });
     }
-    res.json({ message: 'Service deleted successfully' });
+    res.json(deletedService);
   } catch (error) {
     next(error);
   }

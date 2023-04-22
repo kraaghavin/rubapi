@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 
 const serviceSchema = new Schema({
-  name: {
+  title: {
     type: String,
     required: true,
   },
@@ -10,6 +10,10 @@ const serviceSchema = new Schema({
     required: true,
   },
   price: {
+    type: Number,
+    required: true,
+  },
+  duration: {
     type: Number,
     required: true,
   },
@@ -43,33 +47,68 @@ const serviceSchema = new Schema({
 
 const Service = model('Service', serviceSchema);
 
-// Function to find all services
-export async function find() {
+export async function findOne(query) {
+  try {
+    const service = await Service.findOne(query);
+    return service;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+export async function findAll() {
   try {
     const services = await Service.find();
     return services;
   } catch (error) {
-    throw new Error('Failed to find services');
+    console.error(error);
+    throw error;
   }
 }
 
-// Function to create a new service
-export async function create(serviceData) {
-  try {
-    const service = new Service(serviceData);
-    const createdService = await service.save();
-    return createdService;
-  } catch (error) {
-    throw new Error('Failed to create service');
-  }
-}
-
-// Function to find a service by ID
 export async function findById(id) {
   try {
     const service = await Service.findById(id);
     return service;
   } catch (error) {
-    throw new Error('Failed to find service by ID');
+    console.error(error);
+    throw error;
   }
 }
+
+export async function updateById(id, data) {
+  try {
+    const service = await Service.findByIdAndUpdate(id, data, {
+      new: true,
+      runValidators: true
+    });
+    return service;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+export async function create(data) {
+  try {
+    const services = new Service(data);
+    await services.save();
+    return services;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+export async function deleteById(id) {
+  try {
+    const service = await Service.findByIdAndDelete(id);
+    return service;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+export default Service;
