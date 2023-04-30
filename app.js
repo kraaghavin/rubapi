@@ -11,14 +11,13 @@ import connectDB from './config/database.js';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000; 
+const PORT = process.env.PORT || 3001; 
 connectDB();
-
 
 // Middleware
 app.use(express.json());
 app.use(cors());
- 
+
 // Routes 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);

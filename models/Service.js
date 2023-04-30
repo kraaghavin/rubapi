@@ -43,6 +43,40 @@ const serviceSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  imageGallery: [{
+    type: String,
+  }],
+  reviews: [{
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
+    rating: {
+      type: Number,
+      required: true,
+      min: 1,
+      max: 5,
+    },
+    comment: {
+      type: String,
+    },
+  }],
+  customizationOptions: [{
+    type: {
+      type: String,
+      required: true,
+    },
+    options: [{
+      label: {
+        type: String,
+        required: true,
+      },
+      value: {
+        type: String,
+        required: true,
+      },
+    }],
+  }],
 });
 
 const Service = model('Service', serviceSchema);

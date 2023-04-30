@@ -7,15 +7,11 @@ import { generateToken } from '../utils/auth.js'; // Import the function to gene
 // POST /api/users
 export async function createUser(req, res, next) {
   try {
-    //console.log('HI');
-
     const { username,  email, password } = req.body;
     const user = await create({ username, email, password });
-    //console.log(user._id.toString(),"Raghav");
     const userId = user._id.toString();
     // Generate JWT token for the registered user
     const token = generateToken({name: user.username, email: user.email, user: userId, role: user.role, createdAt: user.createdAt }); // Assuming user._id is the ID of the registered user
-    //console.log(token);
     res.json({ user, token }); // Return the user and token in the response
   } catch (error) {
     next(error);

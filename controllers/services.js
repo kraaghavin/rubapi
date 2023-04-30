@@ -11,13 +11,10 @@ import { findOne } from '../models/User.js';
       } else {
       const  userEmail  = getCurrentUser(req, res, next);
       const id = await userEmail;
-      console.log(id);
       const user = await findOne({ _id: id });
-      console.log(user);
-      const createBy = user.username;
-      console.log(createBy);
-      
-      const newService = await create({ title, description, price, createdBy : user, duration });
+
+      const { password, ...userWithoutPassword } = user;
+      const newService = await create({ title, description, price, createdBy : userWithoutPassword, duration });
       res.json(newService);
   }
     } catch (error) {
