@@ -6,9 +6,9 @@ import authRoutes from './routes/auth.js'; // Update the import paths to use ES6
 import userRoutes from './routes/users.js'; // Update the import paths to use ES6 modules
 import serviceRoutes from './routes/services.js'; // Update the import paths to use ES6 modules
 import errorHandler from './utils/errorHandler.js'; // Update the import paths to use ES6 modules
-import connectDB from './config/database.js';
+import connectDB from './config/databaseServer.js';
 
-dotenv.config();
+dotenv.config(); 
 
 const app = express();
 const PORT = process.env.PORT || 3001; 

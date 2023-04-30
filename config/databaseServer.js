@@ -1,8 +1,8 @@
 
 import { MongoClient, ServerApiVersion } from 'mongodb';
-const uri = 'mongodb+srv://kraaghavin:NJ6FZLmrbmtQ8E5S@cluster0.nqjkrmx.mongodb.net/test-vercel';
+const uri = 'mongodb+srv://kraaghavin:NJ6FZLmrbmtQ8E5S@cluster0.nqjkrmx.mongodb.net/test-vercel'
 
-
+const connectDB = async () => {
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
@@ -25,3 +25,6 @@ async function run() {
   }
 }
 run().catch(console.dir);
+}
+
+export default connectDB; 
