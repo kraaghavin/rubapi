@@ -1,5 +1,4 @@
-
-import { MongoClient, ServerApiVersion } from 'mongodb';
+import mongoose from 'mongoose';
 const uri = 'mongodb+srv://kraaghavin:NJ6FZLmrbmtQ8E5S@cluster0.nqjkrmx.mongodb.net/test-vercel'
 
 function connectDB() {
