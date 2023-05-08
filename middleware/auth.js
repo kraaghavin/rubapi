@@ -1,10 +1,10 @@
 //middleware/auth.js
-import { verifyToken } from '../utils/auth';
+import { verifyToken } from '../utils/auth.js';
 
 
 // Middleware to authenticate user using JWT token
 export function authenticateUser(req, res, next) {
-// Get the token from the request headers
+    // Get the token from the request headers
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) {
         return res.status(401).json({ message: 'Token not found' });
@@ -30,7 +30,7 @@ export async function getCurrentUser(req, res, next) {
             // const { password, ...userWithoutPassword } = user;
             // return userWithoutPassword;
             return user;
-          } else {
+        } else {
             throw new Error('User not found');
         }
 
